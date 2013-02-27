@@ -1,0 +1,14 @@
+<div class="page-header">
+    <h1>Liste de {{prenoms.length}} prénoms de {{sexe}}</h1>
+    <a href="#/prenoms/{{autreSexeLink}}">Voir des prénoms de {{autreSexe}}</a>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>Prénom</th>
+        <th>Nombre à Rennes entre 2007 et 2011</th>
+    </tr>
+    <tr ng-repeat="prenom in prenoms | orderBy:'prenom'">
+        <td>{{prenom.prenom}}</td>
+        <td>{{prenom.nombre}}</td>
+    </tr>
+</table>

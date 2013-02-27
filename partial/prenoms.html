@@ -5,10 +5,12 @@
 <table class="table table-striped">
     <tr>
         <th>Prénom</th>
-        <th>Nombre à Rennes entre 2007 et 2011</th>
+        <th>Naissances à Rennes entre 2007 et 2011</th>
+        <th>Naissances à Nantes entre 2007 et 2012</th>
     </tr>
     <tr ng-repeat="prenom in prenoms | orderBy:'prenom'">
         <td>{{prenom.prenom}}</td>
-        <td>{{prenom.nombre}}</td>
+        <td>{{prenom.nombreRennes}}</td>
+        <td>{{prenom.nombreNantes}}</tD>
     </tr>
 </table>

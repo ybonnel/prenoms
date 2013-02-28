@@ -10,14 +10,8 @@
     </tr>
     <tr ng-repeat="prenom in prenoms | orderBy:'prenom'">
         <td><a ng-click="addPrenom(prenom)">{{prenom.prenom}}</a></td>
-        <td>{{prenom.nbNaissances}}</td>
-        <td>
-            <ul>
-                <li ng-repeat="language in prenom.languages">
-                    {{language}}
-                </li>
-            </ul>
-        </td>
+        <td>{{prenom.nbNaissances}}<span ng-hide="prenom.nbNaissances">Inconnu</span</td>
+        <td><span ng-repeat="language in prenom.languages"><span class="label label-info">{{language}}</span>&nbsp;</span></td>
     </tr>
 </table>
 

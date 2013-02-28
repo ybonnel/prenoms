@@ -60,7 +60,7 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
         if (positionToRemove !== -1) {
             myPrenoms.splice(positionToRemove, 1);
         }
-        
+
         localStorage[sexe] = JSON.stringify(myPrenoms);
         $scope.favoritePrenoms = myPrenoms;
     }
@@ -69,10 +69,7 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
         $scope.favoritePrenoms = JSON.parse(localStorage[sexe]);
     }
 
-    $log.info($scope.favoritePrenoms);
-
-    
-    $http.get('prenoms.json', {}).success(function(data) {
+    $scope.refresh = function(data) {
 
         $scope.prenoms = [];
 
@@ -99,6 +96,14 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
 
             nbLook = nbLook + 1;
         }
+    }
+
+    
+    $http.get('prenoms.json', {}).success(function(data) {
+
+        $scope.allPrenoms = data;
+
+        $scope.refresh(data);
 
     })
 }

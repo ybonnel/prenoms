@@ -15,10 +15,16 @@
     </tr>
 </table>
 
+<div class="well">
+    <button class="btn btn-primary" ng-click="refresh(allPrenoms)">Rafraichir</button>
+</div>
 
-<div class="btn-group" ng-repeat="prenom in favoritePrenoms | orderBy:'prenom'">
-    <button class="btn btn-info" title="{{prenom.nombreRennes}} naissances à Rennes et {{prenom.nombreNantes}} naissances à Nantes">{{prenom.prenom}}</button>
-    <button class="btn btn-danger dropdown-togle" ng-click="removePrenom(prenom)">
-        <span>X</span>
-    </button>
+
+<div class="well">
+    <div class="btn-group" ng-repeat="prenom in favoritePrenoms | orderBy:'prenom'">
+        <button class="btn btn-info" title="{{prenom.nombreRennes}} naissances à Rennes et {{prenom.nombreNantes}} naissances à Nantes">{{prenom.prenom}}</button>
+        <button class="btn btn-danger dropdown-togle" ng-click="removePrenom(prenom)">
+            <span>X</span>
+        </button>
+    </div>
 </div>

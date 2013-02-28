@@ -103,6 +103,15 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
 
         $scope.allPrenoms = data;
 
+        var nbPrenoms = 0;
+
+        for (var i in data) {
+            if (data[i].sexe == sexe) {
+                nbPrenoms = nbPrenoms +1;
+            }
+        }
+        $scope.nbPrenoms = nbPrenoms;
+
         $scope.refresh(data);
 
     })

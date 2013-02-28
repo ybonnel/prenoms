@@ -7,7 +7,7 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
 
     var sexe = $routeParams.sexe;
 
-    var nombrePrenoms = 5;
+    var nombrePrenoms = 10;
 
     if (sexe == "GARCON") {
         $scope.sexe = "garçon";
@@ -77,40 +77,37 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
 
         while ($scope.prenoms.length < nombrePrenoms && nbLook < 10000) {
 
-            var prenom = data[Math.floor(Math.random()*data.length)];
+            var index = Math.floor(Math.random()*data.length);
 
-            if (prenom.sexe === sexe) {
+            var prenom = data[index];
 
-                var found = false;
+            var found = false;
 
-                for (var i in $scope.prenoms) {
-                    if ($scope.prenoms[i].prenom === prenom.prenom) {
-                        found = true;
-                    }
-                }
-
-                if (!found) {
-                    $scope.prenoms.push(prenom);
+            for (var i in $scope.prenoms) {
+                if ($scope.prenoms[i].prenom === prenom.prenom) {
+                    found = true;
                 }
             }
 
+            if (!found) {
+                if (typeof(prenom.naissancesByYear) !== "undefined") {
+                    prenom.nbNaissances = 0;
+                    $.each(prenom.naissancesByYear, function(index, item) {
+                        prenom.nbNaissances = prenom.nbNaissances + item;
+                    });
+                }
+                $scope.prenoms.push(prenom);
+            }
+            
             nbLook = nbLook + 1;
         }
     }
 
     
-    $http.get('prenoms.json', {}).success(function(data) {
+    $http.get('prenoms' + sexe + '.json', {}).success(function(data) {
 
         $scope.allPrenoms = data;
-
-        var nbPrenoms = 0;
-
-        for (var i in data) {
-            if (data[i].sexe == sexe) {
-                nbPrenoms = nbPrenoms +1;
-            }
-        }
-        $scope.nbPrenoms = nbPrenoms;
+        $scope.nbPrenoms = data.length;
 
         $scope.refresh(data);
 

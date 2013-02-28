@@ -16,4 +16,9 @@
 </table>
 
 
-<span ng-repeat="prenom in favoritePrenoms | orderBy:'prenom'" class="label label-info span1">{{prenom.prenom}}&nbsp;&nbsp;<span class="badge badge-important" ng-click="removePrenom(prenom)">X</span></span>
+<div class="btn-group" ng-repeat="prenom in favoritePrenoms | orderBy:'prenom'">
+    <button class="btn btn-info" title="{{prenom.nombreRennes}} naissances à Rennes et {{prenom.nombreNantes}} naissances à Nantes">{{prenom.prenom}}</button>
+    <button class="btn btn-danger dropdown-togle" ng-click="removePrenom(prenom)">
+        <span>X</span>
+    </button>
+</div>

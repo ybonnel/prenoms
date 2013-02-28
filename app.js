@@ -89,7 +89,19 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
                 }
             }
 
-            if (!found) {
+            var languageOk = false;
+
+            if (typeof(prenom.languages) !== "undefined") {
+                $.each(prenom.languages, function(index, language) {
+                    $.each($scope.origines, function(index, origine) {
+                        if (origine.choose === true && origine.language === language) {
+                            languageOk = true;
+                        }
+                    });
+                });
+            }
+
+            if (!found && languageOk) {
                 if (typeof(prenom.naissancesByYear) !== "undefined") {
                     prenom.nbNaissances = 0;
                     $.each(prenom.naissancesByYear, function(index, item) {
@@ -107,6 +119,25 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
     $http.get('prenoms' + sexe + '.json', {}).success(function(data) {
 
         $scope.allPrenoms = data;
+        $scope.origines = [];  
+        $.each(data, function(index, prenom){
+            if (typeof(prenom.languages) !== "undefined") {
+                $.each(prenom.languages, function(index, language){
+                    var found = false;
+                    $.each($scope.origines, function(index, origine) {
+                        if (origine.language === language) {
+                            found = true;
+                        }
+                    });
+                    if (!found) {
+                         var origine = {};
+                         origine.language = language;
+                         origine.choose = (language === "french");
+                         $scope.origines.push(origine); 
+                    }
+                });
+            }
+        });
         $scope.nbPrenoms = data.length;
 
         $scope.refresh(data);

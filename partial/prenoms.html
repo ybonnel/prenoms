@@ -28,3 +28,12 @@
         </button>
     </div>
 </div>
+
+<div class="well span4">
+    <fieldset>
+        <legend>Choix des origines</legend>
+        <label class="checkbox" ng-repeat="origine in origines">
+            <input type="checkbox" ng-model="origine.choose" ng-change="refresh(allPrenoms)"> {{origine.language}}</input>
+        </label>
+    </fieldset>
+</div>

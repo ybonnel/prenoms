@@ -7,7 +7,9 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
 
     var sexe = $routeParams.sexe;
 
-    var nombrePrenoms = 10;
+    $scope.nombrePrenoms = 5;
+    $scope.naissancesMin = 0;
+    $scope.naissancesMax = 9999999;
 
     if (sexe == "GARCON") {
         $scope.sexe = "garçon";
@@ -21,6 +23,14 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
         $scope.sexe = "bizare";
         $scope.autreSexe = "garçon";
         $scope.autreSexeLink = "GARCON";
+    }
+
+    $scope.showOrHide = function(id) {
+        if ($(id).is(':visible')) {
+            $(id).hide('fast');
+        } else {
+            $(id).show('fast');
+        }
     }
 
     $scope.addPrenom = function(prenom) {
@@ -75,7 +85,7 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
 
         var nbLook = 0;
 
-        while ($scope.prenoms.length < nombrePrenoms && nbLook < 10000) {
+        while ($scope.prenoms.length < $scope.nombrePrenoms && nbLook < 10000) {
 
             var index = Math.floor(Math.random()*data.length);
 
@@ -101,13 +111,23 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
                 });
             }
 
-            if (!found && languageOk) {
-                if (typeof(prenom.naissancesByYear) !== "undefined") {
-                    prenom.nbNaissances = 0;
-                    $.each(prenom.naissancesByYear, function(index, item) {
-                        prenom.nbNaissances = prenom.nbNaissances + item;
-                    });
-                }
+
+            if (typeof(prenom.naissancesByYear) !== "undefined") {
+                prenom.nbNaissances = 0;
+                $.each(prenom.naissancesByYear, function(index, item) {
+                    prenom.nbNaissances = prenom.nbNaissances + item;
+                });
+            }
+
+            var naissancesOk = true;
+            if ($scope.naissancesMin > 0 && ($scope.naissancesMin > prenom.nbNaissances || typeof(prenom.nbNaissances) === "undefined")) {
+                naissancesOk = false;
+            }
+            if (typeof(prenom.nbNaissances) !== "undefined" && $scope.naissancesMax < prenom.nbNaissances) {
+                naissancesOk = false;
+            }
+
+            if (!found && languageOk && naissancesOk) {
                 $scope.prenoms.push(prenom);
             }
             

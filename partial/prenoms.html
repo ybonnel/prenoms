@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Liste de {{prenoms.length}} prénoms de {{sexe}} (sur {{nbPrenoms}} prénoms possibles)</h1>
+    <h3>Liste de {{prenoms.length}} prénoms de {{sexe}} (sur {{nbPrenoms}} prénoms possibles)</h3>
     <a href="#/prenoms/{{autreSexeLink}}">Voir des prénoms de {{autreSexe}}</a>
 </div>
 <table class="table table-striped">
@@ -21,6 +21,7 @@
 
 
 <div class="well">
+    <legend>Prénoms favoris</legend>
     <div class="btn-group" ng-repeat="prenom in favoritePrenoms | orderBy:'prenom'">
         <button class="btn btn-info">{{prenom.prenom}}</button>
         <button class="btn btn-danger dropdown-togle" ng-click="removePrenom(prenom)">
@@ -29,11 +30,47 @@
     </div>
 </div>
 
-<div class="well span4">
+<div class="well span3">
     <fieldset>
-        <legend>Choix des origines</legend>
+        <legend><a ng-click="showOrHide('#origines')">Origines</a></legend>
+        <div id="origines" style="display:none">
         <label class="checkbox" ng-repeat="origine in origines">
             <input type="checkbox" ng-model="origine.choose" ng-change="refresh(allPrenoms)"> {{origine.language}}</input>
         </label>
+        <div>
+    </fieldset>
+</div>
+
+<div class="well span3">
+    <fieldset>
+        <legend><a ng-click="showOrHide('#nombrePrenoms')">Nombre de prénoms</a></legend>
+        <div id="nombrePrenoms" style="display:none">
+            <select ng-model="nombrePrenoms" ng-change="refresh(allPrenoms)">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+        <div>
+    </fieldset>
+</div>
+
+<div class="well span3">
+    <fieldset>
+        <legend><a ng-click="showOrHide('#nombreNaissances')">Nombre de naissances</a></legend>
+        <div id="nombreNaissances" style="display:none">
+            <div class="control-group">
+                <label class="control-label" for="naissancesMin">Minimum</label>
+                <div class="controls">
+                    <input type="number" id="naissancesMin" ng-model="naissancesMin" ng-change="refresh(allPrenoms)"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="naissancesMax">Maximum</label>
+                <div class="controls">
+                    <input type="number" id="naissancesMax" ng-model="naissancesMax" ng-change="refresh(allPrenoms)"/>
+                </div>
+            </div>
+        <div>
     </fieldset>
 </div>

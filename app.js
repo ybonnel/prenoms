@@ -12,17 +12,19 @@ function PrenomsBySexeController($scope, $http, $routeParams, $log) {
     $scope.naissancesMax = 9999999;
 
     if (sexe == "GARCON") {
-        $scope.sexe = "garçon";
-        $scope.autreSexe = "fille";
+        $scope.sexe = "de garçons";
+        $scope.autreSexe = "de filles";
         $scope.autreSexeLink = "FILLE";
     } else if (sexe == "FILLE") {
-        $scope.sexe = "fille";
-        $scope.autreSexe = "garçon";
+        $scope.sexe = "de filles";
+        $scope.autreSexe = "de garçons";
         $scope.autreSexeLink = "GARCON";
     } else {
-        $scope.sexe = "bizare";
-        $scope.autreSexe = "garçon";
+        $scope.sexe = "d'extra-terrestres";
+        $scope.autreSexe = "de garçons";
         $scope.autreSexeLink = "GARCON";
+        $scope.prenoms = [];
+        $scope.nbPrenoms = 0;
     }
 
     $scope.showOrHide = function(id) {
